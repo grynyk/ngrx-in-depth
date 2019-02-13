@@ -3,7 +3,7 @@
     <mat-sidenav #start>
         <mat-nav-list (click)="start.close()">
 
-            <a mat-list-item routerLink="/courses">
+            <a mat-list-item routerLink="/courses" *ngIf="userIsLoggedIn$ | async">
                 <mat-icon>library_books</mat-icon>
                 <span>Courses</span>
             </a>

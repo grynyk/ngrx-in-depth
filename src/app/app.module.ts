@@ -18,16 +18,21 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import {RouterStateSerializer, StoreRouterConnectingModule} from "@ngrx/router-store";
-
-import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './reducers';
+import { AuthGuard } from './auth/auth.guard';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 
 const routes: Routes = [
     {
+        path: 'login',
+        loadChildren: './auth/auth.module#AuthModule',
+    },
+    {
         path: 'courses',
         loadChildren: './courses/courses.module#CoursesModule',
-        canActivate: [],
+        canActivate: [AuthGuard],
     },
     {
         path: "**",
@@ -52,6 +57,7 @@ const routes: Routes = [
         MatToolbarModule,
         AuthModule.forRoot(),
         StoreModule.forRoot(reducers, { metaReducers }),
+        EffectsModule.forRoot([]),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
     ],
     providers: [],
