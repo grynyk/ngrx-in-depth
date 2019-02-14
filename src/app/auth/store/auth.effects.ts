@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { defer } from 'rxjs/observable/defer';
 import { of } from 'rxjs/observable/of';
 
-
 @Injectable()
 export class AuthEffects {
 
