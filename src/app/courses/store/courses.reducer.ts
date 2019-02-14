@@ -4,20 +4,21 @@ import { EntityState, EntityAdapter,createEntityAdapter } from '@ngrx/entity';
 import { CourseActions, CourseActionTypes } from './courses.actions';
 
 
-export interface CoursesState extends EntityState<Course> {
+export interface CourseState extends EntityState<Course> {
  
 }
 
 export const courseAdapter: EntityAdapter<Course> = createEntityAdapter<Course>();
-export const initialCoursesState: CoursesState = courseAdapter.getInitialState();
+export const initialCoursesState: CourseState = courseAdapter.getInitialState();
 
-export function CoursesReducer(state = initialCoursesState, action: CourseActions): CoursesState {
+export function CoursesReducer(state = initialCoursesState, action: CourseActions): CourseState {
   switch(action.type){
-    case CourseActionTypes.CourseLoadedAction:
+    case CourseActionTypes.CourseLoaded:
         return courseAdapter.addOne(action.payload.course,state);
-        // case CourseActionTypes.CourseRequestedAction:
-        // return courseAdapter.addOne(action.payload.course,state);
     default:
       return state;
   }
 }
+
+
+export const { selectAll } =  courseAdapter.getSelectors()

@@ -4,7 +4,9 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {CoursesService} from "../services/courses.service";
 import { AppState } from '../../reducers';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { selectAllCourses } from '../store/courses.selectors';
+import { AllCoursesRequestedAction } from '../store/courses.actions';
 
 @Component({
     selector: 'home',
@@ -24,9 +26,10 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        const courses$ = this.coursesService.findAllCourses();
-
+        this.store.dispatch(new AllCoursesRequestedAction())
+        const courses$ = this.store.pipe(
+            select(selectAllCourses)
+        );
         this.beginnerCourses$ = courses$.pipe(
           map(courses => courses.filter(course => course.category === 'BEGINNER') )
         );

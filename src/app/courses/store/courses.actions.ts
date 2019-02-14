@@ -2,20 +2,32 @@ import { Action } from '@ngrx/store';
 import { Course } from '../model/course';
 
 export enum CourseActionTypes {
-  CourseRequestedAction = '[Courses] Requested',
-  CourseLoadedAction ='[Courses] Loaded',
+  AllCoursesRequested = '[Courses] All Courses Requested',
+  AllCoursesLoaded = '[Courses API] All Courses Loaded',
+  CourseRequested = '[Courses] Course Requested',
+  CourseLoaded ='[Courses API] Course Loaded',
 }
 
-export class CourseRequested implements Action {
-  readonly type = CourseActionTypes.CourseRequestedAction;
+export class CourseRequestedAction implements Action {
+  readonly type = CourseActionTypes.CourseRequested;
   constructor(public payload: { courseId:number }) {
   }
 }
 
-export class CourseLoaded implements Action {
-    readonly type = CourseActionTypes.CourseLoadedAction;
+export class CourseLoadedAction implements Action {
+    readonly type = CourseActionTypes.CourseLoaded;
     constructor(public payload: { course:Course }) {
     }
   }
 
-export type CourseActions = CourseRequested | CourseLoaded;
+  export class AllCoursesRequestedAction implements Action {
+    readonly type = CourseActionTypes.AllCoursesRequested;
+  }
+
+  export class AllCoursesLoadedAction implements Action {
+    readonly type = CourseActionTypes.AllCoursesLoaded;
+    constructor(public payload: { courses:Course[] }) {
+    }
+  }
+
+export type CourseActions = CourseRequestedAction | CourseLoadedAction | AllCoursesRequestedAction | AllCoursesLoadedAction;
