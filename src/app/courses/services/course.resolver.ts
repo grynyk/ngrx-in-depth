@@ -10,7 +10,7 @@ import { AppState } from "../../reducers";
 import { Store, select } from "@ngrx/store";
 import { selectCourseById } from "../store/courses.selectors";
 import { tap, filter, first } from "rxjs/operators";
-import { CourseRequested } from "../store/courses.actions";
+import { CourseRequestedAction } from "../store/courses.actions";
 
 
 
@@ -27,7 +27,7 @@ export class CourseResolver implements Resolve<Course> {
            select(selectCourseById(courseId)),
            tap(course =>{
             if(!course){
-                this.store.dispatch(new CourseRequested({courseId}));
+                this.store.dispatch(new CourseRequestedAction({courseId}));
             }
            }),
            filter(course => !!course),
